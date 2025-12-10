@@ -38,16 +38,17 @@ important column that we will be using for the majority of this analysis.
 **2. Splitting the nutrition column into separate numeric features**
 
 In the raw recipes table, Food.com stores nutritional information as a single string in a column called nutrition. This means that it has values formatted as "[calories, total fat, sugar, etc.]" Each of these values is a separate numerical quanity. To make these usable, we stripped the square brackets off the nutrition string, split each string on commas into seven parts, cleaned extra whitespace, and converted all seven entries into numeric numbers. We then assigned them into meaningful column names.
-    The columns are the following:
 
-        - 'calories'
-        - 'total_fat'
-        - 'sugar'
-        - 'sodium'
-        - 'protein'
-        - 'saturated_fat'
-        - 'carbohydrates'
-        
+The columns are the following:
+
+- `calories`
+- `total_fat`
+- `sugar`
+- `sodium`
+- `protein`
+- `saturated_fat`
+- `carbohydrates`
+
 These following columns were added to our DataFrame, while we dropped the original nutrition column because it was not needed anymore. By turning nutrition from a single string into separate numeric columns, we are able to use these columns directly if needed. In particular, the calories column will come in handy later on, as we further analyze this data!
 
 **3. Trimming extreme preparation times (in minutes)**

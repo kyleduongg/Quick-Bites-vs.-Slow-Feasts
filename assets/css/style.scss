@@ -1,9 +1,11 @@
 ---
 ---
 
-@import "jekyll-theme-tactile";
+@import "{{ site.theme }}";
 
-.project-name,
-h1 {
-  font-family: "Times New Roman", Times, serif;
+body,
+h1,
+.site-title,
+.project-name {
+  font-family: "Times New Roman", Times, serif !important;
 }

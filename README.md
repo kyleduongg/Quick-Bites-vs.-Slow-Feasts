@@ -1,4 +1,2 @@
-# Quick Bites vs. Slow-Feasts
-
 Welcome to our DSC 80 project exploring whether “quick bites” (≤ 30 minutes)
 and “slow feasts” (> 30 minutes) differ in rating, calories, and more. …

@@ -52,3 +52,32 @@ The columns are the following:
 These following columns were added to our DataFrame, while we dropped the original nutrition column because it was not needed anymore. By turning nutrition from a single string into separate numeric columns, we are able to use these columns directly if needed. In particular, the calories column will come in handy later on, as we further analyze this data!
 
 **3. Trimming extreme preparation times (in minutes)**
+
+This one is an important one. The minutes column records the preparation time for each recipe. This is user-generated content, some entries are unrealistically large or represent very rare and extremely long recipes. This project is mainly heavily focused on preparation time, so I decided out of consensus to trim these extreme values, so they are not a factor later in the analysis. These extreme values heavily skew the distribution and can dominate summary statistics and visualizations in a way that doesn't reflect typical home cooking. For example, 
+
+| index  | name                        | id     | minutes | contributor_id | sodium | protein | saturated_fat | carbohydrates |
+|--------|-----------------------------|--------|---------|----------------|--------|---------|---------------|----------------|
+| 109931 | how to preserve a husband   | 447963 | 1051200 | 576273         | 1.0    | 7.0     | 115.0         | 5.0            |
+
+Sourced: https://www.food.com/recipe/how-to-preserve-a-husband-447963
+
+These types of recipes aren't even recipes. This recipe takes over one million minutes to make, which is approximately two years. To address this, I computed the 99th percentile of minutes and defined cleaned_recipe_reviews, a new DataFrame where it keeps recipes with mintues less than or equal to the cutoff of the 99th percentile. In other words, to address this situation, I removed the top 1% longest recipes in terms of reported preparation time. The bulk of the project is focused on everyday quick and slow recipes, not the longest dishes that we've ever seen. Removing the top 1% of of mintues helped us focus on patterns that are most relevant, as well as being able to keep a very large number of recipes.
+
+**4. Creating a new column: time_category**
+
+...
+
+**Final Cleaned Data Preview**
+
+Shown below is a perview of the cleaned dataset (cleaned_recipe_reviews.head()), which includes all the cleaning that we had done:
+
+| name                               | id     | minutes | contributor_id | protein | saturated_fat | carbohydrates | time_category |
+|------------------------------------|--------|---------|----------------|---------|---------------|----------------|---------------|
+| 1 brownies in the world best ever  | 333281 | 40      | 985201         | 3.0     | 19.0          | 6.0            | long          |
+| 1 in canada chocolate chip cookies | 453467 | 45      | 1848091        | 13.0    | 51.0          | 26.0           | long          |
+| 412 broccoli casserole             | 306168 | 40      | 50969          | 22.0    | 36.0          | 3.0            | long          |
+| 412 broccoli casserole             | 306168 | 40      | 50969          | 22.0    | 36.0          | 3.0            | long          |
+| 412 broccoli casserole             | 306168 | 40      | 50969          | 22.0    | 36.0          | 3.0            | long          |
+
+
+

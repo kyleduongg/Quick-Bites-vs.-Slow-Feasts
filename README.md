@@ -375,7 +375,7 @@ The model uses the following features:
 - **avg_rating** (Quantitative): average user rating (1-5)
 - **calories** (Quantitative): calories per serving
 
-All four of these are quantitative features. I also did not include any ordinal or nominal features in the baseline model, so there was no need for any one-hot encoding or other categorical encodings. Before fitting the model, I also standardized all four numeric features using **StandardScaler** inside a ColumnTransformer, so that each feature has a mean of 0 and variance 1. This helps the linear regression treat all features on a comparable scale but doesn't change the fundamental predictions.
+All four of these are quantitative features. I also did not include any ordinal or nominal features in the baseline model, so there was no need for any one-hot encoding or other categorical encodings. Before fitting the model, I also standardized all four numeric features using **StandardScaler** inside a ColumnTransformer, so that each feature has a mean of 0 and variance 1. We split the data into an 80% training set and a 20% test set in order to assess how well the model is able to generalize to unseen recipes. This helps the linear regression treat all features on a comparable scale but doesn't change the fundamental predictions. 
 
 Here were the results for our multiple linear regression model:
 
@@ -384,7 +384,7 @@ Here were the results for our multiple linear regression model:
 | Train | 0.0448    | 80.27        |
 | Test  | 0.0452    | 79.29        |
 
-On the test set, we set using an 80/20 split, the baseline linear regression model performs very poorly. Both the training and test R² values are close to 0. The RMSE on both splits is roughly 80 minutes. An RMSE of about 80 means, on average, the model predictions are off by more than 80 minutes in total, which is not very helpful for someone trying to estimate cooking time. The very low R² also shows how the model explains almost none of the variation in minutes beyond just predicting something close to the overall mean. Because of the combination of high error and low predictive power, I do not consider the baseline to be "good" but rather for it to be very "weak". This baseline was mainly serve as a starting point, as I look to improve the model.
+On the test set, we set using an 80/20 split, where the baseline linear regression model performs very poorly. Both the training and test R² values are close to 0. The RMSE on both splits is roughly 80 minutes. An RMSE of about 80 means, on average, the model predictions are off by more than 80 minutes in total, which is not very helpful for someone trying to estimate cooking time. The very low R² also shows how the model explains almost none of the variation in minutes beyond just predicting something close to the overall mean. Because of the combination of high error and low predictive power, I do not consider the baseline to be "good" but rather for it to be very "weak". This baseline was mainly serve as a starting point, as I look to improve the model.
  
 --- 
 

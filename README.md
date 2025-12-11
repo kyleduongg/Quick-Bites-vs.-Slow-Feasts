@@ -313,8 +313,8 @@ To remind you about our question:
 
 As in Step 3, we worked with a DataFrame that included all of the rows, because we needed all the rows to study missingness. For this hypothesis test, however, return to our original dataset, where we have already removed unrealistic time outliers and added the columns **avg_rating** and **time_category**. This cleaned verisionbebtter reflects typical recipes and is more appropriate for comparing the average ratings of quick vs long recipes. It removes these fake recipes that take over one million minutes that may skew the ratings to one group, hurting the overall analysis becasue of it.
 
-* Null Hypothesis ($H_0$): Quick recipes (≤ 30 minutes) and long recipes (> 30 minutes) have the same average rating.
-* Alternative Hypothesis ($H_1$): Quick recipes and long recipes have different average ratings.
+* Null Hypothesis: Quick recipes (≤ 30 minutes) and long recipes (> 30 minutes) have the same average rating.
+* Alternative Hypothesis: Quick recipes and long recipes have different average ratings.
 * Test Statistic: The difference in average rating between the two groups.
 
 In other words:
@@ -331,11 +331,13 @@ Results:
 
 Let's visualize it using an empirical distribution!
 
+This empirical distribution shows the null distribution of the difference in average mean recipe rating between long and quick recipes, built from the permutation test. The blue bars are simulated differences in mean rating (long - quick) you get when the permutation test shuffled the "quick/long" labels many times. They are centered near 0, which is what we'd expect if the two groups truly had the smae average rating. The red line at about -0.035 is our observed difference, meaning long recipes are rated about 0.035 stars lower on average than quick recipes. The red line lies far in the left tail of the null distribution and the p-value is zero, this difference is unlikely to occur by chance alone, so our data provides strong evidence that quick and long recipes do not have the same average rating.
+
 <iframe
-  src="assets/empdistofmeandifferencesinavgrating.html"
+  src="assets/empdistofhypothesis.html"
   width="600"
   height="450"
   frameborder="0"
 ></iframe>
 
-We used a two-sided alternative because our question was is a two-sided alternative becuase our question was "do they differ?" rather than assuming in advance that one group must be higher. To assess significance, we run a permutation test meaning that we shuffled the time_category labels (quick and long) among recipes, reocmputed the difference in mean ratings each time. This is a good choice for our setting becasue ratings are discrete and skewed and a permtuation test does not rely on normality assumptions, it directly reflects the kind of variation we'd expect just from random group labels. We used a significance level of 0.05. The resulting p-value was effectively 0. This p-value far below 0.05, meaning we **reject** the null hypothesi sand conclude that our data provide evidence that quick and long recipes do not have exactly the same average rating. Hwoever, the estimated difference in means is very small (about 0.035 stars), so while the result is statistically significant given our alrge sample size, the practical difference in suer ratings between "quick bites" and "slow feasts" appear to be quite subtle rather than very dramatic. 
+We used a two-sided alternative because our question was is a two-sided alternative because our question was "do they differ?" rather than assuming in advance that one group must be higher. To assess significance, we run a permutation test meaning that we shuffled the time_category labels (quick and long) among recipes, recomputed the difference in mean ratings each time. This is a good choice for our setting because ratings are discrete and skewed and a permutation test does not rely on normality assumptions, it directly reflects the kind of variation we'd expect just from random group labels. We used a significance level of 0.05. The resulting p-value was effectively 0. This p-value far below 0.05, meaning we **reject** the null hypothesis sand conclude that our data provide evidence that quick and long recipes do not have exactly the same average rating. However, the estimated difference in means is very small (about 0.035 stars), so while the result is statistically significant given our large sample size, the practical difference in suer ratings between "quick bites" and "slow feasts" appear to be quite subtle rather than very dramatic. 

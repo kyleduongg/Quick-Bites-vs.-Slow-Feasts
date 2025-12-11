@@ -290,3 +290,15 @@ This graph shows the KDE plot of calories for recipes with and without missing r
 ></iframe>
 
 We ran a permutation test to compare the mean of a numeric column between rows where a value is missing or not missing. It first drops rows where the numeric column is NaN, then computes the observed difference in means between the True and False groups of missing_col. To see what differences could occur by random chance, it shuffles the missing/not-missing labels, recomputes the difference in means for each shuffle, and then stores these values. The p-value is then calculated as the proportion of shuffled difference that are at least extreme.
+
+Again, let's visualize it using a empirical distribution:
+
+<iframe
+  src="assets/empdistofcalories.html"
+  width="600"
+  height="450"
+  frameborder="0"
+></iframe>
+
+
+This  empirical distribution shows the permutation (null) distribution of the difference in mean calories between missing and non-missing ratings. The blue bars are the differences we get just by randomly shuffling the missing/non-missing labels, as they are mostly near 0. The red line is at about 69.01 calories, which is our observed difference, far out in the tail, meaning a difference this large is extremely unlikely under the null and gives strong evidence that missingness is related to calories. In our permutation test, the observed difference in mean calories between recipes with missing and non-missing ratings was about 69.01 (missing - not missing), and the p-value was essentially 0. This p-value is well below our signifcance level of 0.05, we reject the null hypothesis and conclude that our data provide strong evidence that rating missingness is associated with calories. In this sample, recipes with missing ratings tend to have higher average calories than those with non-missing ratings, suggesting that missingness is not completely random with respect to calories, although we can't fully determine the exact missingness mechanism from this test alone. 

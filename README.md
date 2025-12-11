@@ -161,7 +161,7 @@ The aggregate table compares ratings for quick and long recipes. Both categories
 
 ---
 
-Interesting Aggregates: 
+Interesting Aggregates: Rating by Number of Steps
 
 To explore the relationship between recipe complexity and the ratings, we aggregated our data by the n_steps column and created a pivot table that summarizes for each distinct number of steps.
 
@@ -171,33 +171,24 @@ To explore the relationship between recipe complexity and the ratings, we aggreg
 
 This pivot table summarizes how recipe ratings vary with the number of steps, which is showcases how long a recipe is to make. Most recipes fall in the mid-range of steps, and across almost all steps, the mean ratings stay around 4.6 and 4.7 with a median of 5. In other words, recipes with only a few steps and many steps are both rated very highly. Recipes with more steps are generally more time-consuming, so this pattern supports our main findings that any differences between quick and long recipes likely be very subtle.
 
-|   Number of Steps |   Mean Rating |   Median Rating |   Number of Recipes |
-|------------------:|--------------:|----------------:|--------------------:|
-|                 1 |       4.71742 |         5       |                2653 |
-|                 2 |       4.72083 |         4.92308 |                7536 |
-|                 3 |       4.70468 |         4.9     |               11551 |
-|                 4 |       4.69776 |         4.875   |               14663 |
-|                 5 |       4.65825 |         4.83333 |               17448 |
-|                 6 |       4.66666 |         4.83333 |               18538 |
-|                 7 |       4.67944 |         4.85714 |               19741 |
-|                 8 |       4.66903 |         4.85246 |               19062 |
-|                 9 |       4.665   |         4.84615 |               18098 |
-|                10 |       4.652   |         4.83333 |               15947 |
-|                11 |       4.6688  |         4.86667 |               13402 |
-|                12 |       4.66565 |         4.83333 |               11868 |
-|                13 |       4.68586 |         4.875   |                9712 |
-|                14 |       4.66882 |         4.875   |                8276 |
-|                15 |       4.67    |         4.88776 |                6839 |
-|                16 |       4.68773 |         4.9     |                5900 |
-|                17 |       4.69146 |         4.88889 |                5057 |
-|                18 |       4.66368 |         4.88235 |                3646 |
-|                19 |       4.67912 |         4.95    |                3268 |
-|                20 |       4.71212 |         4.875   |                3025 |
-|                21 |       4.68774 |         5       |                2133 |
-|                22 |       4.68419 |         4.94444 |                1766 |
-|                23 |       4.70402 |         4.88889 |                1624 |
-...
-|                87 |       5       |         5       |                  10 |
-|                88 |       3       |         3       |                   1 |
-|                93 |       5       |         5       |                   4 |
-|                71 |     nan       |       nan       |                   0 |
+| Number of Steps | Mean Rating | Median Rating | Number of Recipes |
+|----------------:|------------:|--------------:|------------------:|
+|               1 |     4.71742 |        5.0000 |              2653 |
+|               2 |     4.72083 |        4.9231 |              7536 |
+|               3 |     4.70468 |        4.9000 |             11551 |
+|               4 |     4.69776 |        4.8750 |             14663 |
+|               5 |     4.65825 |        4.8333 |             17448 |
+|               6 |     4.66666 |        4.8333 |             18538 |
+|               7 |     4.67944 |        4.8571 |             19741 |
+|               8 |     4.66903 |        4.85246|             19062 |
+|               9 |     4.66500 |        4.84615|             18098 |
+|              10 |     4.65200 |        4.8333 |             15947 |
+|              11 |     4.66880 |        4.86667|             13402 |
+|              12 |     4.66565 |        4.8333 |             11868 |
+|              13 |     4.68586 |        4.8750 |              9712 |
+|              14 |     4.66882 |        4.8750 |              8276 |
+|              15 |     4.67000 |        4.88776|              6839 |
+| ...            |      ...     |        ...    |               ... |
+|              87 |     5.00000 |        5.0000 |                10 |
+|              88 |     3.00000 |        3.0000 |                 1 |
+|              93 |     5.00000 |        5.0000 |                 4 |

@@ -392,7 +392,8 @@ On the test set, we used an 80/20 split, where the baseline linear regression mo
 For my final model, the same prediction target was used as in the baseline model, which was minutes. This is because minutes is the overall item that we are trying to predict! However, there are new features that I have added, and also switched to a more flexible modeling algorithm!
 
 The features that will be used in the final model:
-- On top of the original numeric features (n_steps, n_ingredients, avg_rating, calories), I also engineered three additional features that will help predict preparation time.
+On top of the original numeric features (n_steps, n_ingredients, avg_rating, calories), I also engineered three additional features that will help predict preparation time.
+
 - calories_per_ingredient: total calories divided by the number of ingredients
 
 This feature is important because it gives a sense of how rich or dense each ingredient is on average. A dish with many calories packed into relatively few ingredients (butter, cream, cheese) might involve different preparation steps (melting, baking, longer cooking) than a low-calorie salad. This connects to the data-generating process because more complex and heavier recipes may correlate with more time.

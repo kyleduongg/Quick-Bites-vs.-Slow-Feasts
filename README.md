@@ -205,6 +205,8 @@ Using the flowchart for missingness, we start with Missing by Design (MD). For t
 
 **Missingness Dependency**:
 
+Note this analysis for this part, I will include all information that was included in the DataFrame. Earlier, we removed outliers because our questions were mostly focused on preparation timee. However, since we are testing for missingness, we will use all originally observed rows (including the outliers) because it is important when studying for missingness. 
+
 To study missingness more, we focused on the column **rating** and created a boolean indicator **rating_missing** that is True when a recipe has no average rating and **False** otherwise. Following the missingness flowchart, once we ruled out "MD" and "NMAR" for **rating**, we used permutation tests whether its missingness was MCAR and MAR with respect to other columns.
 
 Permutation tests will be conducted whether the missingness of the column **rating** is dependent on other variables.
@@ -213,8 +215,8 @@ Let's start with if the column of **rating** is dependent on **minutes**.
 
 Before running our permutation test, we have to first set it up!
 
-* Null Hypothesis ($H_0$): The distribution of **minutes** is the same for recipes with missing ratings and recipes with non-missing ratings.
-* Alternative Hypothesis ($H_1$): The distribution of **minutes** is different for recipes with missing ratings compared to those with non-missing ratings.
+* Null Hypothesis ($$H_0$$): The distribution of **minutes** is the same for recipes with missing ratings and recipes with non-missing ratings.
+* Alternative Hypothesis ($$H_1$$): The distribution of **minutes** is different for recipes with missing ratings compared to those with non-missing ratings.
 * Test Statistic: The differnece in mean preparation time between recipes with missing ratings and recipes with non-missing ratings.
 
 In other words:
@@ -225,3 +227,21 @@ Significance: (α = 0.05)
 * If the p-value < 0.05: I will reject ($H_0$) and conclude that rating missingness is related to the preparation time.
 * If the p-value ≥ 0.05: I will fail to reject ($H_0$) and conclude that any observed difference in minutes is consistent with random chance.
 
+Let's graph it before we start our permutation test.
+
+This KDE plot is comparing the distribution of prep time in minutes for two groups:
+- True (Blue): Rows where rating_missing == True
+- False (Orange): Rows where rating_missing == False
+
+Both curves are strongly right-skewed. The two lines mostly overlap, which means the distributon of preparation times for recipes with missing ratings looks very similar to the distribution for recipes that have recorded ratings. Visually, there isn't a huge shift in the center or the shape between the groups, so from this plot alone we don't have strong evidence that longer (or shorter) recipes are much more likely to be missing ratings.
+
+<iframe
+  src="assets/distofmins.html"
+  width="600"
+  height="450"
+  frameborder="0"
+></iframe>
+
+To test whether missing ratings depend on preparation time, we compare the average minutes for recipes with missing ratings to those that aren't missing. The test statistic is the difference in mean minutes (missing - not missing). Under the null hypothesis that the rating missingness is independent of preparation time, shufflign the missing/not missing labels across recipes shouldn't systemically change this difference. By repeatedly permuting the labels and recomputing the difference in means, the function builds an empirical null distribuition and uses it to compute a p-value, telling us how unsuual our observed difference is under the null.
+
+The observed difference was about **51.45** minutes, and the permutation test (shuffling the rating_missing) labels produced a p-value of 0.13. As the p-value threshold is well above 0.05, we **fail to reject** the null hypothesis that rating missingness is independent of cooking time. In other words, with respect to **minutes**, the missingness of **rating** is consistent with MCAR. Any observed difference in mean prep time could be reasonably explained by random chance rather than a systematic dependence on minutes. 

@@ -35,6 +35,8 @@ After that, we grouped by recipe and computed the mean of the (now cleaned) rati
 This step is important to us because it created a recipe-level dataset that matches the real process, recipes are sent to the website first than ratings come after it. This also ensures that average rating are not lowered by the "zeros". It also gave us the avg_rating column, which is central to our main question and an
 important column that we will be using for the majority of this analysis.
 
+---
+
 **2. Splitting the nutrition column into separate numeric features**
 
 In the raw recipes table, Food.com stores nutritional information as a single string in a column called nutrition. This means that it has values formatted as "[calories, total fat, sugar, etc.]" Each of these values is a separate numerical quanity. To make these usable, we stripped the square brackets off the nutrition string, split each string on commas into seven parts, cleaned extra whitespace, and converted all seven entries into numeric numbers. We then assigned them into meaningful column names.
@@ -51,6 +53,8 @@ The columns are the following:
 
 These following columns were added to our DataFrame, while we dropped the original nutrition column because it was not needed anymore. By turning nutrition from a single string into separate numeric columns, we are able to use these columns directly if needed. In particular, the calories column will come in handy later on, as we further analyze this data!
 
+---
+
 **3. Trimming extreme preparation times (in minutes)**
 
 This one is an important one. The minutes column records the preparation time for each recipe. This is user-generated content, some entries are unrealistically large or represent very rare and extremely long recipes. This project is mainly heavily focused on preparation time, so I decided out of consensus to trim these extreme values, so they are not a factor later in the analysis. These extreme values heavily skew the distribution and can dominate summary statistics and visualizations in a way that doesn't reflect typical home cooking. For example, 
@@ -63,11 +67,15 @@ Sourced: https://www.food.com/recipe/how-to-preserve-a-husband-447963
 
 These types of recipes aren't even recipes. This recipe takes over one million minutes to make, which is approximately two years. To address this, I computed the 99th percentile of minutes and defined cleaned_recipe_reviews, a new DataFrame where it keeps recipes with mintues less than or equal to the cutoff of the 99th percentile. In other words, to address this situation, I removed the top 1% longest recipes in terms of reported preparation time. The bulk of the project is focused on everyday quick and slow recipes, not the longest dishes that we've ever seen. Removing the top 1% of of mintues helped us focus on patterns that are most relevant, as well as being able to keep a very large number of recipes.
 
+---
+
 **4. Creating a new column: time_category**
 
 Our main question is about quick bites versus slow feasts, so I decided to create a new categorical column called time_category that labels each recipe as either quick or long. Based on the project description, we defined quick recipes as those with minutes ≤ 30 and long recipes as those with minutes > 30. This was done by applying a simple condition on the cleaned minutes column and assigning the labels "quick" and "long" for the amount of minutes it was.
 
 This step is important because it turned raw preparation time into a clear group label that we will use throughout the rest of the project. The time_category column will allow us to directly compare the distribution of ratings, calories, and complexity between quick and long recipes. It will be used later for further analysis on the question that we are asking.
+
+---
 
 **Final Cleaned Data Preview**
 
@@ -80,6 +88,8 @@ Shown below is a preview of the cleaned dataset (cleaned_recipe_reviews.head()),
 | 412 broccoli casserole             | 306168 | 40      | 5.0        | ... | 6       | 9             | ['60-minutes-or-less', 'time-to-make', 'course', ...]         | long          |
 | 412 broccoli casserole             | 306168 | 40      | 5.0        | ... | 6       | 9             | ['60-minutes-or-less', 'time-to-make', 'course', ...]         | long          |
 | 412 broccoli casserole             | 306168 | 40      | 5.0        | ... | 6       | 9             | ['60-minutes-or-less', 'time-to-make', 'course', ...]         | long          |
+
+---
 
 
 

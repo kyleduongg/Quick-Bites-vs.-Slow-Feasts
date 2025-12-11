@@ -413,9 +413,7 @@ For the final model, I pivoted towards a Random Forest Regressor, wrapped in a p
     - One-hot encode meal_type
 3. Fit a RandomForestRegressor on transformed measures 
 
-Random forests is my chosen model because they can handle these types of relationships and interactions without us having to hand specify all those combinations as features.
-
-I tuned the model's hyperparameters using GridSearchCV with 3-fold cross-validation on the training set, using negative RMSE as the scoring metric. This is because RMSE being lower means that it is better. The grid search over:
+Random forests is my chosen model because they can handle these types of relationships and interactions without us having to hand specify all those combinations as features. I, then, tuned the model's hyperparameters using GridSearchCV with 3-fold cross-validation on the training set, using negative RMSE as the scoring metric. This is because RMSE being lower means that it is better. The grid searched over:
 
 - n_estimators: [100, 200]
 - max_depth: [None, 10, 20]
@@ -448,3 +446,49 @@ Compared to the baseline:
 There is a noticeable gap between training and test performance. By this, this means that there is a high train R² and a low test R², suggesting some degree of overfitting, which is common with flexible models like random forests. However, even with the gap, the final model generalizes far better than the baseline. This can be told because the errors are smaller and it captures more structure in the data. Overall, the engineered features and the Random Forest Regressor yield a more useful predictor of recipe preparation time than the original multiple linear regression baseline model. 
 
 ---
+
+### Fairness Analysis 
+
+For our fairness check, we asked whether our final model performs worse for "simple" recipes than for "complex" recipes. In other words, does the model make larger errors for one type of recipe?
+
+To define our groups:
+- Group X (Simple recipes): recipes with n_steps ≤ 7
+- Group Y (Complex recipes): recipes with n_steps > 7
+
+We chose n_steps because it's a natural measure of recipe complexity! They also measure the complexity of time because the more steps, the more time it takes. A fair model should not be much less accurate for one of these groups than the other. 
+
+Let's define our permutation test now:
+
+Hypotheses & Test Statistic:
+* Null Hypothesis ($H_0$): There is no difference in RMSE performance between simple recipes and complex recipes, any observed difference is due to chance.
+* Alternative Hypothesis ($H_1$): The model performs worse on complex recipes, meaning its RMSE for complex recipes is higher than its RMSE for simple recipes.
+* Test Statistic: (The root mean squared error of complexity) - (the root mean squared error of simple)
+
+In other words:
+
+*T* = (RMSE of complex) - (RMSE of simple)
+
+- Note: We use RMSE on the test set as our evaluation metric because RMSE directly measures how far our predicted cooking times are, in minutes. 
+
+Significance: (α = 0.05)
+* If the p-value < 0.05: There is evidence that the model performs worse on complex recipe.
+* If the p-value ≥ 0.05: We do not have enough evidence to claim unfairness in that direction.
+
+From the test set, we found: 
+- RMSE for simple recipes to be 41.93 minutes
+- RMSE for complex recipes to be 38.45 minutes
+
+This gives us our observed test statistic of -3.48 minutes. After running our permutation test on 10000 iterations, we found the p-value to be 0.9923. Let's visualize this using a empirical distribution:
+
+This shows the null distribution of our test statistic. Under the null hypothesis, the model is equally accurate for simple and complex recipes; these permuted differences cluster around 0, so most of the blue bars are near 0 on the x-axis. The red vertical line marks our observed difference of about -3.48 minutes, meaning that in the real data, the RMSE for complex recipes is about 3.5 minutes lower than for simple recipes. Almost the entire null distribution lies to the right of the red line; the one-sided p-value is very large. This indicates that our analysis does not provide evidence that the model performs worse on complex recipes. 
+
+<iframe
+  src="assets/empdistofrmsediff.html"
+  width="600"
+  height="450"
+  frameborder="0"
+></iframe>
+
+The resulting one-sided p-value was about 0.9923. This is much larger than 0.05, we **fail to reject** the null hypothesis. In other words, our data does not provide evidence that the model performs worse on compelx recipes than on simple ones. In fact, the model may slightly be more accurate on complex recipes, though we would be catious on over-interpreting thos.
+
+Overall, within this fairness setup, we do not fidn evidence that the final model is unfair against complex recipes.

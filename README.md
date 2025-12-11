@@ -99,7 +99,7 @@ To further analyze our question, I decided to examine the number of steps in a r
 <iframe
   src="assets/steps_hist.html"
   width="600"
-  height="800"
+  height="400"
   frameborder="0"
 ></iframe>
 
@@ -112,7 +112,7 @@ Another useful plot is to show how average recipe ratings are being distributed 
 <iframe
   src="assets/avg_rec_ratings.html"
   width="600"
-  height="800"
+  height="400"
   frameborder="0"
 ></iframe>
 
@@ -125,7 +125,7 @@ Another useful plot is to compare the average ratings between the "quick" catego
 <iframe
   src="assets/boxplt_avg_ratings_quick_long.html"
   width="600"
-  height="800"
+  height="400"
   frameborder="0"
 ></iframe>
 

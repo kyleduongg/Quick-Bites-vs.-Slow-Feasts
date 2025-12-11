@@ -7,8 +7,10 @@ Authored by: Kyle Duong
 This project uses a large open dataset of recipes and ratings derived from Food.com, a website where home cooks share recipes and review each other's dishes that are shared online. The data comes in from two different CSV files, one with recipe details and the other that contains user interactions. The recipe file contains 83,782 rows (one row per recipe) and interaction file contains 731,927 rows (one row per review).
 
 When people cook at time, they're always trading off between **time** and everything else such as taste, effort, etc. With busy schedules, a natural question comes up:
-    **If I choose to make "quick bite" (≤ 30 minutes) instead of a "slow feast" (> 30 minutes), am I actually giving up the quality?** That's the question we want to explore!
-    In other words: **Do “quick” recipes (≤ 30 minutes) get different average ratings than “long” (> 30 minutes) recipes?** 
+
+- **If I choose to make "quick bite" (≤ 30 minutes) instead of a "slow feast" (> 30 minutes), am I actually giving up the quality?** That's the question we want to explore!
+
+- In other words: **Do “quick” recipes (≤ 30 minutes) get different average ratings than “long” (> 30 minutes) recipes?** 
 
 This is an important question to investigate given it reflects a decision many people make everyday. Some days, there is not just enough time to make a hearty meal that takes multiple hours. They either decide to make something fast or spend the day in the kitchen, making a nice meal. By looking at real recipe data and ratings from thousands of real people, we can get a better sense of whether quick recipes are actually "worse," or whether you can save time without give up too much in terms of how much people enjoy the dish.
 

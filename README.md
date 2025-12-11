@@ -79,7 +79,7 @@ This step is important because it turned raw preparation time into a clear group
 
 **Final Cleaned Data Preview**
 
-Shown below is a preview of the cleaned dataset (cleaned_recipe_reviews.head()), which includes all the cleaning that we had done:
+Shown below is a preview of the cleaned dataset (first 5 rows) along with relevant columns to answer our question:
 
 | name                               | id     | minutes | avg_rating | ... | n_steps | n_ingredients | tags                                                           | time_category |
 |------------------------------------|--------|---------|-----------:|-----|--------:|--------------:|----------------------------------------------------------------|---------------|

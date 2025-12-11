@@ -15,12 +15,13 @@ This is an important question to investigate given it reflects a decision many p
 To further explore this question, we merge the recipe and rating datasets using a left join merge on Recipe ID and also calcualted the average rating per recipe, which was added to the original recipes DataFrame. After the merge, the official DataFrame will contain 83,782 rows that contain the recipe as well as the average rating of it.
 
 We want to focus on the following columns, which are most relevant to our main question:
-- **'minutes'**: The total preparation time for the recipe, formatted in minutes. This will be used to define **quick** recipes and **slow** recipes.
+- **'minutes'**: The total preparation time for the recipe, formatted in minutes. This will be used to define **quick** recipes and **slow** recipes later.
 - **'avg_rating'**: The average rating (from 1 to 5) that a recipe received across all of the recipe's reviews.
 - **'calories'**: The number of calories per serving.
 - **'n_steps'**: The number of steps in the recipe instructions.
 - **n_ingredients**: The number of distinct ingredients used in the recipe.
 - **tags**: A set of user-supplied tags.
+- **time_category**: A self-created column that groups the column **minutes** into two groups. If the recipe is less than or equal to 30 minutes, it will be grouped as quick otherwise it'll be grouped as long.
 
 ### Data Cleaning and Exploratory Data Analysis
 
@@ -102,6 +103,8 @@ To further analyze our question, I decided to examine the number of steps in a r
   frameborder="0"
 ></iframe>
 
+---
+
 **Univariate Analysis: Distribution of Average Recipe Ratings**
 
 Another useful plot is to show how average recipe ratings are being distributed across all recipes in the dataset. As we can see, most recipes usually have very high ratings ranging from 4.0 to 5.0 with a big boom nears 5 stars. There are relatively very few recipes that are rated below three stars. This tells us that users tend to rate recipes positively, so any difference between "quick" and "long" recipe average ratings will likely be very small, rather than us noticng a big contrast between good and bad recipes. 
@@ -113,4 +116,15 @@ Another useful plot is to show how average recipe ratings are being distributed 
   frameborder="0"
 ></iframe>
 
+--- 
 
+**Bivariate Analysis: Average Ratings by Time Category**
+
+Another useful plot is to compare the average ratings between the "quick" category and the "long" category. To do this, we plotted a boxplot because it will compare the distribution of average ratings between two groups in a compact way. This boxplot will summarize key distributional differences cleanly. This will tell us more information about the question we are up against. As we can see, both categories are rated highly overall and it looks to be that their medians and spreads are almost identical together. As suggested in the Univariate Analysis: **Distribution of Average Recipe Ratings**, it seems that recipe do not tend to be reated differently if they are quick or long, it might be a very subtle difference if we do see any kind of it. We will learn more when we do our hypothesis testing!
+
+<iframe
+  src="assets/boxplt_avg_ratings_quick_long.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>

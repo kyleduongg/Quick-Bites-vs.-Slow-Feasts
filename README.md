@@ -67,6 +67,17 @@ Sourced: https://www.food.com/recipe/how-to-preserve-a-husband-447963
 
 These types of recipes aren't even recipes. This recipe takes over one million minutes to make, which is approximately two years. To address this, I computed the 99th percentile of minutes and defined cleaned_recipe_reviews, a new DataFrame that keeps recipes with minutes less than or equal to the cutoff of the 99th percentile. In other words, to address this situation, I removed the top 1% longest recipes in terms of reported preparation time. The bulk of the project is focused on everyday quick and slow recipes, not the longest dishes that we've ever seen. Removing the top 1% of minutes helped us focus on patterns that are most relevant, as well as being able to keep a very large number of recipes.
 
+Let's plot to see what happens if we were to keep these outliers:
+
+<iframe
+  src="assets/missingdist.html"
+  width="600"
+  height="400"
+  frameborder="0"
+></iframe>
+
+As we can see, the graph tells us nothing informative as the outliers are skewing the analysis.
+
 ---
 
 **4. Creating a new column: time_category**

@@ -94,7 +94,7 @@ Shown below is a preview of the cleaned dataset (cleaned_recipe_reviews.head()),
 **Univariate Analysis: Number of Steps**
 
 <iframe
-  src="assets/<some-name>.html"
+  src="assets/<steps_hist>.html"
   width="800"
   height="600"
   frameborder="0"

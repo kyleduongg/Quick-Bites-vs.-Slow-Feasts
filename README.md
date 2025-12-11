@@ -492,3 +492,7 @@ This shows the null distribution of our test statistic. Under the null hypothesi
 The resulting one-sided p-value was about 0.9923. This is much larger than 0.05, we **fail to reject** the null hypothesis. In other words, our data does not provide evidence that the model performs worse on compelx recipes than on simple ones. In fact, the model may slightly be more accurate on complex recipes, though we would be catious on over-interpreting thos.
 
 Overall, within this fairness setup, we do not fidn evidence that the final model is unfair against complex recipes.
+
+--- 
+ 
+## Fin 👨‍🍳

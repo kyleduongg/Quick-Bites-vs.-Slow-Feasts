@@ -112,7 +112,7 @@ Another useful plot is to show how average recipe ratings are being distributed 
 <iframe
   src="assets/avg_rec_ratings.html"
   width="600"
-  height="400"
+  height="450"
   frameborder="0"
 ></iframe>
 
@@ -125,7 +125,7 @@ Another useful plot is to compare the average ratings between the "quick" catego
 <iframe
   src="assets/boxplt_avg_ratings_quick_long.html"
   width="600"
-  height="400"
+  height="450"
   frameborder="0"
 ></iframe>
 
@@ -138,7 +138,7 @@ This scatterplot shows the relationship between preparation time and average rat
 <iframe
   src="assets/preptime_vs_avgrating.html"
   width="600"
-  height="400"
+  height="450"
   frameborder="0"
 ></iframe>
 

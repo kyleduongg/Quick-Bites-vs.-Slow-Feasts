@@ -192,3 +192,34 @@ This pivot table summarizes how recipe ratings vary with the number of steps, wh
 |              87 |     5.00000 |        5.0000 |                10 |
 |              88 |     3.00000 |        3.0000 |                 1 |
 |              93 |     5.00000 |        5.0000 |                 4 |
+
+---
+
+### Assessment of Missingness
+
+**NMAR Analysis**:
+
+Using the flowchart for missingness, we start with Missing by Design (MD). For the **review** column, the missing values are not MD. This is because Food.com doesn't automatically require or generate review text based on other columns and nothing about minutes, avg_rating, or n_steps lets us reconstruct exactly what this msising review would have said. Uers are simply given the option to leave a review or not, so we move onto NMAR. We ask whether the missingness of **review** is based on NMAR. Here, I think the answer is yes! In practice, people are more likely to type out a review only when they have a strong reaction to a recipe, either that they loved it or disliked it, had an amazing time with it, or felt that it was important to write something about it. If there is experience was mediorce, or they just bake and never leave reviews, or in a rush, they may just click a star rating and skip out writing the review. Those underlying reasons are not recorded in our dataset, but they directly affect whether **review** is missing or not. This is exactly the definition of NMAR because the probability that a value is missing depends on unobserved information, in this case, what the people would have written or how strongly they felt. To make this missingness closer to MQAR, we need extra observed variables that capture these hidden factors. For example, Food.com could log a simple yes/no response such as "Did you enjoy this recipe?" or a short reason for not reviewing option. If we had columns such as overall enjoyment or review frequency, then we found that missing reviews were largely explained by those variables, then we could say review missingness is MAR with respect to them. 
+
+---
+
+**Missingness Dependency**:
+
+Permutation tests will be conducted whether the missingness of the column **rating** is dependent on other variables.
+
+Let's start with if the column of **rating** is dependent on **minutes**.
+
+Before running our permutation test, we have to first set it up!
+
+* Null Hypothesis ($H_0$): The distribution of **minutes** is the same for recipes with missing ratings and recipes with non-missing ratings.
+* Alternative Hypothesis ($H_1$): The distribution of **minutes** is different for recipes with missing ratings compared to those with non-missing ratings.
+* Test Statistic: The differnece in mean preparation time between recipes with missing ratings and recipes with non-missing ratings.
+
+In other words:
+
+*T* = (mean minutes for rows with missing ratings) - (mean minutes for rows with non-missing ratings)
+
+Significance: (α = 0.05)
+* If the p-value < 0.05: I will reject ($H_0$) and conclude that rating missingness is related to the preparation time.
+* If the p-value ≥ 0.05: I will fail to reject ($H_0$) and conclude that any observed difference in minutes is consistent with random chance.
+

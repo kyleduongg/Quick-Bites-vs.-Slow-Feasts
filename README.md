@@ -205,6 +205,8 @@ Using the flowchart for missingness, we start with Missing by Design (MD). For t
 
 **Missingness Dependency**:
 
+To study missingness more, we focused on the column **rating** and created a boolean indicator **rating_missing** that is True when a recipe has no average rating and **False** otherwise. Following the missingness flowchart, once we ruled out "MD" and "NMAR" for **rating**, we used permutation tests whether its missingness was MCAR and MAR with respect to other columns.
+
 Permutation tests will be conducted whether the missingness of the column **rating** is dependent on other variables.
 
 Let's start with if the column of **rating** is dependent on **minutes**.

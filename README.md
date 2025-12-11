@@ -130,3 +130,12 @@ Another useful plot is to compare the average ratings between the "quick" catego
 ></iframe>
 
 ---
+
+**Bivariate Analysis: Preparation Time vs. Average Rating**
+
+<iframe
+  src="assets/preptime_vs_avgrating.html"
+  width="600"
+  height="400"
+  frameborder="0"
+></iframe>

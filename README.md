@@ -131,6 +131,8 @@ Another useful plot is to compare the average ratings between the "quick" catego
 
 ---
 
+This scatterplot shows the relationship between preparation time and average rating, with polors colored by whether the recipe is quick or long. As we can see, quick recipes cluster at shorter preparation times while long recipes span a much wider time range. However, as we can see, both groups are still mostly rated between four and five stars, which backs up what we had seen in our previous graph. There is no strong trend of ratings increasing or decreasing with cook time, which shows that long recipes are not neccessarily rather much higher or lower than quick ones. As what we been seeing, the difference may be subtle if there is anything at all.
+
 **Bivariate Analysis: Preparation Time vs. Average Rating**
 
 <iframe
@@ -139,3 +141,5 @@ Another useful plot is to compare the average ratings between the "quick" catego
   height="400"
   frameborder="0"
 ></iframe>
+
+---

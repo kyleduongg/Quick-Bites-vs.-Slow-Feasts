@@ -244,4 +244,15 @@ Both curves are strongly right-skewed. The two lines mostly overlap, which means
 
 To test whether missing ratings depend on preparation time, we compare the average minutes for recipes with missing ratings to those that aren't missing. The test statistic is the difference in mean minutes (missing - not missing). Under the null hypothesis that the rating missingness is independent of preparation time, shufflign the missing/not missing labels across recipes shouldn't systemically change this difference. By repeatedly permuting the labels and recomputing the difference in means, the function builds an empirical null distribuition and uses it to compute a p-value, telling us how unsuual our observed difference is under the null.
 
-The observed difference was about **51.45** minutes, and the permutation test (shuffling the rating_missing) labels produced a p-value of 0.13. As the p-value threshold is well above 0.05, we **fail to reject** the null hypothesis that rating missingness is independent of cooking time. In other words, with respect to **minutes**, the missingness of **rating** is consistent with MCAR. Any observed difference in mean prep time could be reasonably explained by random chance rather than a systematic dependence on minutes. 
+After running our permutation test, let's build an empirical distribution to get sense of our data:
+
+<iframe
+  src="assets/empdismeandiffinmin.html"
+  width="600"
+  height="450"
+  frameborder="0"
+></iframe>
+
+This empirical distribution shows the null distribution of our test statistic, which is the difference in mean minutes (missing - present). The blue bars represent how likely different difference in means are if, in reality, there is no true difference between the two groups. The red vertical line marks our observed ifference of about 51.45 minutes from the original and unshuffled data. To find the p-value, we look at the proportion of the blue bars at or to the right of this red line, which was 0.13, which means 13% of simualted differences were as larger as or larger than what we had observed, so our result is not extremely unusual under the null. In our permutation test, the observed difference in mean preparation time (51.45 minutes) produced a p-value of roughly 0.13, which is larger than our chosen significance level of 0.05. This means our data do not provide strong statistical evidence against the null hypothesis. This means that we fail to reject the null hypothesis. In other words, while recipes with missing ratings appear to take longer on average, the difference is not statistically significant at the 5% level. This means that we can not confidently claim that rating missingness is associated with preparation time.
+
+

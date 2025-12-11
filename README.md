@@ -341,3 +341,25 @@ This empirical distribution shows the null distribution of the difference in ave
 ></iframe>
 
 We used a two-sided alternative because our question was is a two-sided alternative because our question was "do they differ?" rather than assuming in advance that one group must be higher. To assess significance, we run a permutation test meaning that we shuffled the time_category labels (quick and long) among recipes, recomputed the difference in mean ratings each time. This is a good choice for our setting because ratings are discrete and skewed and a permutation test does not rely on normality assumptions, it directly reflects the kind of variation we'd expect just from random group labels. We used a significance level of 0.05. The resulting p-value was effectively 0. This p-value far below 0.05, meaning we **reject** the null hypothesis sand conclude that our data provide evidence that quick and long recipes do not have exactly the same average rating. However, the estimated difference in means is very small (about 0.035 stars), so while the result is statistically significant given our large sample size, the practical difference in suer ratings between "quick bites" and "slow feasts" appear to be quite subtle rather than very dramatic. 
+
+### Framing a Prediction Problem
+
+Our overall project has focused on whether “quick” recipes get different ratings than “long” recipes. To extend this theme, we now turn to a prediction problem! Let’s predict a recipe’s cooking time (in minutes). This type of problem is a regression problem since the quanity we want to predict is a continuous numeric value rather than predicting a category for which it belongs to. For our baseline model, we'll predict minutes using four features from our DataFrame! 
+
+Let's start to make our baseline model!
+
+- Our target variable (minutes): This is what we're trying to predict. 
+
+Features we will use at the time of the prediction:
+
+We imagine our model being used when a recipe page already exists on Food.com. At that point, we know:
+- n_steps and n_ingredients: This comes directly from recipe instructions and ingredient list
+- calories: This is found within the nutrition information that is stored on that recipe
+- tags: These are user-supplied labels describing the recipe
+- avg_rating: This summarizes the reviews the reecipe has already received.
+
+All of these are available before predicting a cooking time estimate. None of these are information from the future. 
+
+Our evaluation metric: We will evaluate our models primarily on using the **root mean squared error** in minutes, and we will also report R² as a secondary summary. RMSE is a good choice because it is defined for continuous outcomes and penalizes large mistakes more heavily than small ones. It is measured in the same units as the target, so we can interpret it directly. For example, if there was an RMSE of 60, this would mean our predictions are off by about 60 minutes on average. I prefer RMSE because we are predicting the actual cooking time itself. 
+
+--- 

@@ -93,6 +93,8 @@ Shown below is a preview of the cleaned dataset (cleaned_recipe_reviews.head()),
 
 **Univariate Analysis: Number of Steps**
 
+To further analyze our question, I decided to examine the number of steps in a recipe. In this graph, the distribution is right-skewed, where most recipes have roughly five to fifteen steps, with the count dropping off as the number of steps increases in the recipe. There are a small number of recipes that have 30+ steps, which represent dishes that take a long time. This graph is useful because it showcases the complexity of the recipes, as the more steps it has, the more complex it is as well as the more time it takes to make that certain dish as well. 
+
 <iframe
   src="assets/steps_hist.html"
   width="800"
@@ -100,5 +102,13 @@ Shown below is a preview of the cleaned dataset (cleaned_recipe_reviews.head()),
   frameborder="0"
 ></iframe>
 
+**Univariate Analysis: 
+
+<iframe
+  src="assets/avg_rec_ratings.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 

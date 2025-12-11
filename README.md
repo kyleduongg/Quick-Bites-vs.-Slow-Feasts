@@ -199,7 +199,7 @@ This pivot table summarizes how recipe ratings vary with the number of steps, wh
 
 **NMAR Analysis**:
 
-Using the flowchart for missingness, we start with Missing by Design (MD). For the **review** column, the missing values are not MD. This is because Food.com doesn't automatically require or generate review text based on other columns and nothing about minutes, avg_rating, or n_steps lets us reconstruct exactly what this msising review would have said. Uers are simply given the option to leave a review or not, so we move onto NMAR. We ask whether the missingness of **review** is based on NMAR. Here, I think the answer is yes! In practice, people are more likely to type out a review only when they have a strong reaction to a recipe, either that they loved it or disliked it, had an amazing time with it, or felt that it was important to write something about it. If there is experience was mediorce, or they just bake and never leave reviews, or in a rush, they may just click a star rating and skip out writing the review. Those underlying reasons are not recorded in our dataset, but they directly affect whether **review** is missing or not. This is exactly the definition of NMAR because the probability that a value is missing depends on unobserved information, in this case, what the people would have written or how strongly they felt. To make this missingness closer to MQAR, we need extra observed variables that capture these hidden factors. For example, Food.com could log a simple yes/no response such as "Did you enjoy this recipe?" or a short reason for not reviewing option. If we had columns such as overall enjoyment or review frequency, then we found that missing reviews were largely explained by those variables, then we could say review missingness is MAR with respect to them. 
+Using the flowchart for missingness, we start with Missing by Design (MD). For the **review** column, the missing values are not MD. This is because Food.com doesn't automatically require or generate review text based on other columns and nothing about minutes, avg_rating, or n_steps lets us reconstruct exactly what this msising review would have said. Uers are simply given the option to leave a review or not, so we move onto NMAR. We ask whether the missingness of **review** is based on NMAR. Here, I think the answer is yes! In practice, people are more likely to type out a review only when they have a strong reaction to a recipe, either that they loved it or disliked it, had an amazing time with it, or felt that it was important to write something about it. If there is experience was mediorce, or they just bake and never leave reviews, or in a rush, they may just click a star rating and skip out writing the review. Those underlying reasons are not recorded in our dataset, but they directly affect whether **review** is missing or not. This is exactly the definition of NMAR because the probability that a value is missing depends on unobserved information, in this case, what the people would have written or how strongly they felt. To make this missingness closer to MCAR, we need extra observed variables that capture these hidden factors. For example, Food.com could log a simple yes/no response such as "Did you enjoy this recipe?" or a short reason for not reviewing option. If we had columns such as overall enjoyment or review frequency, then we found that missing reviews were largely explained by those variables, then we could say review missingness is MAR with respect to them. 
 
 ---
 
@@ -370,7 +370,7 @@ For my baseline model, I used a **multiple linear regression** model to predict 
 
 The model uses the following features:
 
-- **n_steps** (Quantitative)(Quantitative): number of steps in the recipe
+- **n_steps** (Quantitative): number of steps in the recipe
 - **n_ingredients** (Quantitative): number of distinct ingredients
 - **avg_rating** (Quantitative): average user rating (1-5)
 - **calories** (Quantitative): calories per serving
@@ -389,3 +389,62 @@ On the test set, we set using an 80/20 split, where the baseline linear regressi
 --- 
 
 ### Final Model 
+
+For my final model, the same prediction target was used as in the baseline model, which was minutes. This is because minutes is the overall item that we are trying to predict! However, there are new features that I haev added and also switched to a more flexible modeling algorithm as well!
+
+The features that will be used in the final model:
+- On top of the original numeric features (n_steps, n_ingredients, avg_rating, calories), I also engineered three additional features that will help predict preparation time.
+- calories_per_ingredient: total calories divided by the number of ingredients
+This feature is important because it gives a sense of how rich or dense each ingredient is on average. A dish with many calories packed into relatively few ingredients (butter, cream, cheese) might invovle different preparation steps (melting, baking, longer cooking) than a low-calorie salad. This connects to the data generating process because more complex and heavier recipes may correlate to more time.
+- log_calories: a log transform of calories using log1p
+Cooking times can grow with recipe "size," but the relationship is unlikely to be perfectly linear. Taking the log compresses very large calorie values and helps the model pick up a smoother and more realistic pattern without leeting a few huge-calorie recipes dominate the model.
+- meal_type: a category inferred from the tags column, where there are four options: "breakfast", "lunch", "main-dish" (otherwise known as dinner), and "other".
+Different meal types often have different typical prep times. For example, breakfast dishes have to be quick because people either have work, school, etc. while mai dishes are more likely to be slower. Using meal_type gives the model high-level context about when and how the recipe is intended to be served, which is related to how long people are willing to spend cooking it.
+
+All numeric features are treated as quantitative, and meal_type is a nominal categorical that I one-hot encoded in the pipeline. Together, these features try to capture structural complexity (steps, ingredients) and recipe style (nutrition, meal type) which are all reasonable drivers of cooking time!
+
+Modeling algorithm and hyperparameter selection:
+
+For the final model, I pivoted towards a Random Forest Regressor, wrapped in a pipeline that will do the following threee steps:
+
+1. Come feature engineering with FunctionTransformer to add calories_per_ingredient, log_calories, and meal_type.
+2. Use a ColumnTransformer to: 
+    - Standardize all numeric features with StandardScaler
+    - One-hot encode meal_type
+3. Fit a RandomForestRegressor on transformed measures 
+
+Random forests is my chosen model because they can handle these types of relationships and interactions without us having to hand specify all those combinations as features.
+
+I tuned the model's hyperparameters using GridSearchCV with 3-fold cross-validation on the training set, using negative RMSE as the scoring metric. This is because RMSE being lower means that it is better. The grid search over:
+
+- n_estimators: [100, 200]
+- max_depth: [None, 10, 20]
+- min_samples_leaf: [1, 5]
+
+The best-performing combination found by GridSearchCV was:
+
+- n_estimators: 200
+- max_depth: None
+- min_samples_leaf = 1
+
+I then used this best model to fit on the full training data and evaluated it on the held-out test data, which is the same 80/20 split as in the baseline. Now, we can see the performance of our baseline model.
+
+| Split | R_squared | RMSE_minutes |
+|-------|-----------|--------------|
+| Train | 0.966     | 15.06        |
+| Test  | 0.758     | 39.89        |
+
+For comparison, here was the earlier baseline model:
+
+| Split | R_squared | RMSE_minutes |
+|-------|-----------|--------------|
+| Train | 0.0448    | 80.27        |
+| Test  | 0.0452    | 79.29        |
+
+Compared to the baseline:
+- Test R² improved dramatically about 0.05 to 0.78, meaning the final model explains a much larger share of the variation in cooking time.
+- Test RMSE improved from about 79 minutes to 40 minutes, so typical prediction errors were roughly cut in half.
+
+There is a noticeable gap between training and test performance. By this, this means that there is a high train R² and a low test R², suggesting some degree of overfitting, which is common with flexible models like random forests. However, even with the gap, the final model generalizes far better than the baseline. This can be told because the errors are smaller and it captures more structure in the data. Overall, the engineered features and the Random Forest Regressor yield a more useful predictor of recipe preparation time than the original multiple linear regression baseline model. 
+
+---

@@ -302,3 +302,40 @@ Again, let's visualize it using a empirical distribution:
 
 
 This empirical distribution shows the permutation (null) distribution of the difference in mean calories between missing and non-missing ratings. The blue bars are the differences we get just by randomly shuffling the missing/non-missing labels, as they are mostly near 0. The red line is at about 69.01 calories, which is our observed difference, far out in the tail, meaning a difference this large is extremely unlikely under the null and gives strong evidence that missingness is related to calories. In our permutation test, the observed difference in mean calories between recipes with missing and non-missing ratings was about 69.01 (missing - not missing), and the p-value was essentially 0. This p-value is well below our signifcance level of 0.05, we **reject** the null hypothesis and conclude that our data provide strong evidence that rating missingness is associated with calories. In this sample, recipes with missing ratings tend to have higher average calories than those with non-missing ratings, suggesting that missingness is not completely random with respect to calories, although we can't fully determine the exact missingness mechanism from this test alone. 
+
+---
+
+### Hypothesis Testing 
+
+To remind you about our question:
+
+**Do “quick” recipes (≤ 30 minutes) get different average ratings than “long” (> 30 minutes) recipes?**  
+
+As in Step 3, we worked with a DataFrame that included all of the rows, because we needed all the rows to study missingness. For this hypothesis test, however, return to our original dataset, where we have already removed unrealistic time outliers and added the columns **avg_rating** and **time_category**. This cleaned verisionbebtter reflects typical recipes and is more appropriate for comparing the average ratings of quick vs long recipes. It removes these fake recipes that take over one million minutes that may skew the ratings to one group, hurting the overall analysis becasue of it.
+
+* Null Hypothesis ($H_0$): Quick recipes (≤ 30 minutes) and long recipes (> 30 minutes) have the same average rating.
+* Alternative Hypothesis ($H_1$): Quick recipes and long recipes have different average ratings.
+* Test Statistic: The difference in average rating between the two groups.
+
+In other words:
+
+*T* = (average rating for long recipes) - (average rating for quick recipes)
+
+Significance: (α = 0.05)
+* If the p-value < 0.05: I will reject the null hypothesis and conclude that quick and long recipes have different average ratings.
+* If the p-value ≥ 0.05: I will fail to reject the null hypothesis and conclude that any observed difference in average rating could reasonably be due to chance. 
+
+Results:
+* Observed Statistic: -0.035
+* p-value: 0.00
+
+Let's visualize it using an empirical distribution!
+
+<iframe
+  src="assets/empdistofmeandifferencesinavgrating.html"
+  width="600"
+  height="450"
+  frameborder="0"
+></iframe>
+
+We used a two-sided alternative because our question was is a two-sided alternative becuase our question was "do they differ?" rather than assuming in advance that one group must be higher. To assess significance, we run a permutation test meaning that we shuffled the time_category labels (quick and long) among recipes, reocmputed the difference in mean ratings each time. This is a good choice for our setting becasue ratings are discrete and skewed and a permtuation test does not rely on normality assumptions, it directly reflects the kind of variation we'd expect just from random group labels. We used a significance level of 0.05. The resulting p-value was effectively 0. This p-value far below 0.05, meaning we **reject** the null hypothesi sand conclude that our data provide evidence that quick and long recipes do not have exactly the same average rating. Hwoever, the estimated difference in means is very small (about 0.035 stars), so while the result is statistically significant given our alrge sample size, the practical difference in suer ratings between "quick bites" and "slow feasts" appear to be quite subtle rather than very dramatic. 

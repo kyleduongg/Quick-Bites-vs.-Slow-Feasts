@@ -350,7 +350,7 @@ Let's start to make our baseline model!
 
 - Our target variable (minutes): This is what we're trying to predict. 
 
-Features we will use at the time of the prediction:
+Here are some features we will use at the time of the prediction:
 
 We imagine our model being used when a recipe page already exists on Food.com. At that point, we know:
 - n_steps and n_ingredients: This comes directly from recipe instructions and ingredient list
@@ -360,6 +360,32 @@ We imagine our model being used when a recipe page already exists on Food.com. A
 
 All of these are available before predicting a cooking time estimate. None of these are information from the future. 
 
-Our evaluation metric: We will evaluate our models primarily on using the **root mean squared error** in minutes, and we will also report R² as a secondary summary. RMSE is a good choice because it is defined for continuous outcomes and penalizes large mistakes more heavily than small ones. It is measured in the same units as the target, so we can interpret it directly. For example, if there was an RMSE of 60, this would mean our predictions are off by about 60 minutes on average. I prefer RMSE because we are predicting the actual cooking time itself. 
+Our evaluation metric: We will evaluate our models primarily on using the **root mean squared error** in minutes, and we will also report R² as a secondary summary. RMSE is a good choice because it is defined for continuous outcomes and penalizes large mistakes more heavily than small ones. It is measured in the same units as the target, so we can interpret it directly. For example, if there was an RMSE of 60, this would mean our predictions are off by about 60 minutes on average. RMSE is preferred over metrics like accuracy or F-1 score because they are suited for classification problems, while we are trying to predict the cooking time.  
 
 --- 
+
+### Baseline Model
+
+For my baseline model, I used a **multiple linear regression** model to predict a recipe's preparation time from a small set of numeric features.
+
+The model uses the following features:
+
+- **n_steps** (Quantitative)(Quantitative): number of steps in the recipe
+- **n_ingredients** (Quantitative): number of distinct ingredients
+- **avg_rating** (Quantitative): average user rating (1-5)
+- **calories** (Quantitative): calories per serving
+
+All four of these are quantitative features. I also did not include any ordinal or nominal features in the baseline model, so there was no need for any one-hot encoding or other categorical encodings. Before fitting the model, I also standardized all four numeric features using **StandardScaler** inside a ColumnTransformer, so that each feature has a mean of 0 and variance 1. This helps the linear regression treat all features on a comparable scale but doesn't change the fundamental predictions.
+
+Here were the results for our multiple linear regression model:
+
+| Split | R_squared | RMSE_minutes |
+|-------|-----------|--------------|
+| Train | 0.0448    | 80.27        |
+| Test  | 0.0452    | 79.29        |
+
+On the test set, we set using an 80/20 split, the baseline linear regression model performs very poorly. Both the training and test R² values are close to 0. The RMSE on both splits is roughly 80 minutes. An RMSE of about 80 means, on average, the model predictions are off by more than 80 minutes in total, which is not very helpful for someone trying to estimate cooking time. The very low R² also shows how the model explains almost none of the variation in minutes beyond just predicting something close to the overall mean. Because of the combination of high error and low predictive power, I do not consider the baseline to be "good" but rather for it to be very "weak". This baseline was mainly serve as a starting point, as I look to improve the model.
+ 
+--- 
+
+### Final Model 

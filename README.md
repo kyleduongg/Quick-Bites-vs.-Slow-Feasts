@@ -394,10 +394,15 @@ For my final model, the same prediction target was used as in the baseline model
 The features that will be used in the final model:
 - On top of the original numeric features (n_steps, n_ingredients, avg_rating, calories), I also engineered three additional features that will help predict preparation time.
 - calories_per_ingredient: total calories divided by the number of ingredients
+
 This feature is important because it gives a sense of how rich or dense each ingredient is on average. A dish with many calories packed into relatively few ingredients (butter, cream, cheese) might involve different preparation steps (melting, baking, longer cooking) than a low-calorie salad. This connects to the data-generating process because more complex and heavier recipes may correlate with more time.
+
 - log_calories: a log transform of calories using log1p
+
 Cooking times can grow with recipe "size," but the relationship is unlikely to be perfectly linear. Taking the log compresses very large calorie values and helps the model pick up a smoother and more realistic pattern without letting a few huge-calorie recipes dominate the model.
+
 - meal_type: a category inferred from the tags column, where there are four options: "breakfast", "lunch", "main-dish" (otherwise known as dinner), and "other".
+
 Different meal types often have different typical prep times. For example, breakfast dishes have to be quick because people either have work, school, etc., while main dishes are more likely to be slower. Using meal_type gives the model high-level context about when and how the recipe is intended to be served, which is related to how long people are willing to spend cooking it.
 
 All numeric features are treated as quantitative, and meal_type is a nominal categorical that I one-hot encoded in the pipeline. Together, these features try to capture structural complexity (steps, ingredients) and recipe style (nutrition, meal type), which are all reasonable drivers of cooking time!

@@ -459,8 +459,8 @@ We chose n_steps because it's a natural measure of recipe complexity! They also 
 Let's define our permutation test now:
 
 Hypotheses & Test Statistic:
-* Null Hypothesis ($H_0$): There is no difference in RMSE performance between simple recipes and complex recipes, any observed difference is due to chance.
-* Alternative Hypothesis ($H_1$): The model performs worse on complex recipes, meaning its RMSE for complex recipes is higher than its RMSE for simple recipes.
+* Null Hypothesis: There is no difference in RMSE performance between simple recipes and complex recipes, any observed difference is due to chance.
+* Alternative Hypothesis: The model performs worse on complex recipes, meaning its RMSE for complex recipes is higher than its RMSE for simple recipes.
 * Test Statistic: (The root mean squared error of complexity) - (the root mean squared error of simple)
 
 In other words:

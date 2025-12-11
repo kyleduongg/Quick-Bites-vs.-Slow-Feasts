@@ -102,7 +102,9 @@ To further analyze our question, I decided to examine the number of steps in a r
   frameborder="0"
 ></iframe>
 
-**Univariate Analysis: 
+**Univariate Analysis: Distribution of Average Recipe Ratings**
+
+Another useful plot is to show how average recipe ratings are being distributed across all recipes in the dataset. As we can see, most recipes usually have very high ratings ranging from 4.0 to 5.0 with a big boom nears 5 stars. There are relatively very few recipes that are rated below three stars. This tells us that users tend to rate recipes positively, so any difference between "quick" and "long" recipe average ratings will likely be very small, rather than us noticng a big contrast between good and bad recipes. 
 
 <iframe
   src="assets/avg_rec_ratings.html"

@@ -215,8 +215,8 @@ Let's start with if the column of **rating** is dependent on **minutes**.
 
 Before running our permutation test, we have to first set it up!
 
-* Null Hypothesis ($$H_0$$): The distribution of **minutes** is the same for recipes with missing ratings and recipes with non-missing ratings.
-* Alternative Hypothesis ($$H_1$$): The distribution of **minutes** is different for recipes with missing ratings compared to those with non-missing ratings.
+* Null Hypothesis: The distribution of **minutes** is the same for recipes with missing ratings and recipes with non-missing ratings.
+* Alternative Hypothesis: The distribution of **minutes** is different for recipes with missing ratings compared to those with non-missing ratings.
 * Test Statistic: The differnece in mean preparation time between recipes with missing ratings and recipes with non-missing ratings.
 
 In other words:
@@ -224,8 +224,8 @@ In other words:
 *T* = (mean minutes for rows with missing ratings) - (mean minutes for rows with non-missing ratings)
 
 Significance: (α = 0.05)
-* If the p-value < 0.05: I will reject ($H_0$) and conclude that rating missingness is related to the preparation time.
-* If the p-value ≥ 0.05: I will fail to reject ($H_0$) and conclude that any observed difference in minutes is consistent with random chance.
+* If the p-value < 0.05: I will reject the null hypothesis and conclude that rating missingness is related to the preparation time.
+* If the p-value ≥ 0.05: I will fail to reject hypothesis and conclude that any observed difference in minutes is consistent with random chance.
 
 Let's graph it before we start our permutation test.
 
@@ -253,6 +253,40 @@ After running our permutation test, let's build an empirical distribution to get
   frameborder="0"
 ></iframe>
 
-This empirical distribution shows the null distribution of our test statistic, which is the difference in mean minutes (missing - present). The blue bars represent how likely different difference in means are if, in reality, there is no true difference between the two groups. The red vertical line marks our observed ifference of about 51.45 minutes from the original and unshuffled data. To find the p-value, we look at the proportion of the blue bars at or to the right of this red line, which was 0.13, which means 13% of simualted differences were as larger as or larger than what we had observed, so our result is not extremely unusual under the null. In our permutation test, the observed difference in mean preparation time (51.45 minutes) produced a p-value of roughly 0.13, which is larger than our chosen significance level of 0.05. This means our data do not provide strong statistical evidence against the null hypothesis. This means that we fail to reject the null hypothesis. In other words, while recipes with missing ratings appear to take longer on average, the difference is not statistically significant at the 5% level. This means that we can not confidently claim that rating missingness is associated with preparation time.
+This empirical distribution shows the null distribution of our test statistic, which is the difference in mean minutes (missing - present). The blue bars represent how likely different difference in means are if, in reality, there is no true difference between the two groups. The red vertical line marks our observed ifference of about 51.45 minutes from the original and unshuffled data. To find the p-value, we look at the proportion of the blue bars at or to the right of this red line, which was 0.13, which means 13% of simualted differences were as larger as or larger than what we had observed, so our result is not extremely unusual under the null. In our permutation test, the observed difference in mean preparation time (51.45 minutes) produced a p-value of roughly 0.13, which is larger than our chosen significance level of 0.05. This means our data do not provide strong statistical evidence against the null hypothesis. This means that we fail to reject the null hypothesis. In other words, while recipes with missing ratings appear to take longer on average, the difference is not statistically significant at the 5% level. This means that we can not confidently claim that rating missingness is associated with preparation time. With respect to **minutes**, the missingness of **rating** is consistent with MCAR, as any observed difference in mean prep time could reasonably be explained by random chance rather than a systemtic dependence on minutes. 
 
+--- 
 
+Now, let's try see if the column of **rating** is dependent on **calories**!
+
+As before, we have to set it up!
+
+* Null Hypothesis: The distribution of calories is the same for recipes with missing ratings and recipes with non-missing ratings.
+* Alternative Hypothesis: The distribution of calories is different for recipes with missing ratings compared to those with non missing ratings.
+* Test Statistic: The difference in mean calories between recipes with missing ratings and recipes with non-missing ratings.
+
+In other words:
+
+*T* = (mean calories for rows with missing ratings) - (mean calories for rows with non-missing ratings)
+
+Significance: (α = 0.05)
+* If the p-value < 0.05: I will reject the null hypothesis and conclude that our data provides evidence that rating missingness is associated with calories.
+* If the p-value ≥ 0.05: I will fail to reject the null hypothesis and conclude that our data does not provide strong evidence that rating missingness depends on calories.
+
+Again, let's visualize it first!
+
+This KDE plot is comparing the distribution of calories for two groups:
+
+* True (Blue): Rows where rating_missing == True.
+* False (Orange): Rows where rating_missing == False
+
+This graph shows the KDE plot of calories for recipes with and without missing ratings, after filtering with fewer than 10,000 calories to get a closer look. The orange curve represents recipes where rating is not missing, and the blue curve represents recipes with missing ratings. Both curves are extremely right-skewed, as most recipes have relatively low calories, and a long tail that stretches out to high values. The two lines lie almost on top of each other across the whole range.
+
+<iframe
+  src="assets/distofcalories.html"
+  width="600"
+  height="450"
+  frameborder="0"
+></iframe>
+
+We ran a permutation test to compare the mean of a numeric column between rows where a value is missing or not missing. It first drops rows where the numeric column is NaN, then computes the observed difference in means between the True and False groups of missing_col. To see what differences could occur by random chance, it shuffles the missing/not-missing labels, recomputes the difference in means for each shuffle, and then stores these values. The p-value is then calculated as the proportion of shuffled difference that are at least extreme.

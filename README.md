@@ -55,9 +55,9 @@ These following columns were added to our DataFrame, while we dropped the origin
 
 This one is an important one. The minutes column records the preparation time for each recipe. This is user-generated content, some entries are unrealistically large or represent very rare and extremely long recipes. This project is mainly heavily focused on preparation time, so I decided out of consensus to trim these extreme values, so they are not a factor later in the analysis. These extreme values heavily skew the distribution and can dominate summary statistics and visualizations in a way that doesn't reflect typical home cooking. For example, 
 
-| index  | name                        | id     | minutes | contributor_id | sodium | protein | saturated_fat | carbohydrates |
-|--------|-----------------------------|--------|---------|----------------|--------|---------|---------------|----------------|
-| 109931 | how to preserve a husband   | 447963 | 1051200 | 576273         | 1.0    | 7.0     | 115.0         | 5.0            |
+| index  | name                      | id     | minutes | ... | contributor_id | sodium | protein | saturated_fat | carbohydrates |
+|--------|---------------------------|--------|---------|-----|----------------|--------|---------|---------------|----------------|
+| 109931 | how to preserve a husband | 447963 | 1051200 | ... | 576273         | 1.0    | 7.0     | 115.0         | 5.0            |
 
 Sourced: https://www.food.com/recipe/how-to-preserve-a-husband-447963
 
@@ -65,19 +65,21 @@ These types of recipes aren't even recipes. This recipe takes over one million m
 
 **4. Creating a new column: time_category**
 
-...
+Our main question is about quick bites versus slow feasts, so I decided to create a new categorical column called time_category that labels each recipe as either quick or long. Based on the project description, we defined quick recipes as those with minutes ≤ 30 and long recipes as those with minutes > 30. This was done by applying a simple condition on the cleaned minutes column and assigning the labels "quick" and "long" for the amount of minutes it was.
+
+This step is important because it turned raw preparation time into a clear group label that we will use throughout the rest of the project. The time_category column will allow us to directly compare the distribution of ratings, calories, and complexity between quick and long recipes. It will be used later for further analysis on the question that we are asking.
 
 **Final Cleaned Data Preview**
 
-Shown below is a perview of the cleaned dataset (cleaned_recipe_reviews.head()), which includes all the cleaning that we had done:
+Shown below is a preview of the cleaned dataset (cleaned_recipe_reviews.head()), which includes all the cleaning that we had done:
 
-| name                               | id     | minutes | contributor_id | protein | saturated_fat | carbohydrates | time_category |
-|------------------------------------|--------|---------|----------------|---------|---------------|----------------|---------------|
-| 1 brownies in the world best ever  | 333281 | 40      | 985201         | 3.0     | 19.0          | 6.0            | long          |
-| 1 in canada chocolate chip cookies | 453467 | 45      | 1848091        | 13.0    | 51.0          | 26.0           | long          |
-| 412 broccoli casserole             | 306168 | 40      | 50969          | 22.0    | 36.0          | 3.0            | long          |
-| 412 broccoli casserole             | 306168 | 40      | 50969          | 22.0    | 36.0          | 3.0            | long          |
-| 412 broccoli casserole             | 306168 | 40      | 50969          | 22.0    | 36.0          | 3.0            | long          |
+| name                               | id     | minutes | avg_rating | ... | n_steps | n_ingredients | tags                                                           | time_category |
+|------------------------------------|--------|---------|-----------:|-----|--------:|--------------:|----------------------------------------------------------------|---------------|
+| 1 brownies in the world best ever  | 333281 | 40      | 4.0        | ... | 10      | 9             | ['60-minutes-or-less', 'time-to-make', 'course', ...]         | long          |
+| 1 in canada chocolate chip cookies | 453467 | 45      | 5.0        | ... | 12      | 11            | ['60-minutes-or-less', 'time-to-make', 'cuisine', ...]        | long          |
+| 412 broccoli casserole             | 306168 | 40      | 5.0        | ... | 6       | 9             | ['60-minutes-or-less', 'time-to-make', 'course', ...]         | long          |
+| 412 broccoli casserole             | 306168 | 40      | 5.0        | ... | 6       | 9             | ['60-minutes-or-less', 'time-to-make', 'course', ...]         | long          |
+| 412 broccoli casserole             | 306168 | 40      | 5.0        | ... | 6       | 9             | ['60-minutes-or-less', 'time-to-make', 'course', ...]         | long          |
 
 
 

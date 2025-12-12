@@ -468,8 +468,8 @@ There is a noticeable gap between training and test performance. By this, this m
 For our fairness check, we asked whether our final model performs worse for "simple" recipes than for "complex" recipes. In other words, does the model make larger errors for one type of recipe?
 
 To define our groups:
-- Group X (Simple recipes): recipes with n_steps ≤ 7
-- Group Y (Complex recipes): recipes with n_steps > 7
+- Group X (Simple recipes): recipes with n_steps ≤ 7.
+- Group Y (Complex recipes): recipes with n_steps > 7.
 
 We chose n_steps because it's a natural measure of recipe complexity! They also measure the complexity of time because the more steps, the more time it takes. A fair model should not be much less accurate for one of these groups than the other. 
 
@@ -507,7 +507,7 @@ This shows the null distribution of our test statistic. Under the null hypothesi
 
 The resulting one-sided p-value was about 0.9923. This is much larger than 0.05, meaning we **fail to reject** the null hypothesis. In other words, our data does not provide evidence that the model performs worse on complex recipes than on simple ones. In fact, the model may be slightly more accurate on complex recipes, though we would be cautious about over-interpreting those.
 
-Overall, within this fairness setup, we do not fidn evidence that the final model is unfair against complex recipes.
+Overall, within this fairness setup, we do not find evidence that the final model is unfair against complex recipes.
 
 --- 
  

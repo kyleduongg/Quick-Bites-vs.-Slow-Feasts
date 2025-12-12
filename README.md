@@ -362,7 +362,7 @@ Let's start to make our baseline model!
 
 Here are some features we will use at the time of the prediction:
 
-We imagine our model being used when a recipe page already exists on Food.com. At that point, we know:
+We imagine our model being used when a recipe page already exists on Food.com. At that point, we will know the following:
 - n_steps and n_ingredients: This comes directly from recipe instructions and ingredient list
 - calories: This is found within the nutrition information that is stored on that recipe
 - tags: These are user-supplied labels describing the recipe

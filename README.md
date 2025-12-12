@@ -243,7 +243,7 @@ This KDE plot compares the distribution of prep time in minutes for two groups:
 - True (Blue): Rows where rating_missing == True
 - False (Orange): Rows where rating_missing == False
 
-Both curves are strongly right-skewed. The two lines mostly overlap, which means the distribution of preparation times for recipes with missing ratings looks very similar to the distribution for recipes that have recorded ratings. Visually, there isn't a huge shift in the center or the shape between the groups, so from this plot alone, we don't have strong evidence that longer (or shorter) recipes are much more likely to be missing ratings.
+Both curves are strongly right-skewed. The two lines mostly overlap, which means the distribution of preparation times for recipes with missing ratings looks very similar to the distribution for recipes that have recorded ratings. Visually, this shows that rating missingness is not strongly associated with preparation time. We'll use a permutation test to formally check whether any difference is statistically significant. 
 
 <iframe
   src="assets/distofmins.html"
@@ -311,7 +311,7 @@ Again, let's visualize it using a empirical distribution:
 ></iframe>
 
 
-This empirical distribution shows the permutation (null) distribution of the difference in mean calories between missing and non-missing ratings. The blue bars are the differences we get just by randomly shuffling the missing/non-missing labels, as they are mostly near 0. The red line is at about 69.01 calories, which is our observed difference, far out in the tail, meaning a difference this large is extremely unlikely under the null and gives strong evidence that missingness is related to calories. In our permutation test, the observed difference in mean calories between recipes with missing and non-missing ratings was about 69.01 (missing - not missing), and the p-value was essentially 0. This p-value is well below our significance level of 0.05, we **reject** the null hypothesis and conclude that our data provide strong evidence that rating missingness is associated with calories. In this sample, recipes with missing ratings tend to have higher average calories than those with non-missing ratings, suggesting that missingness is not completely random with respect to calories, although we can't fully determine the exact missingness mechanism from this test alone.
+This empirical distribution shows the permutation (null) distribution of the difference in mean calories between missing and non-missing ratings. The blue bars are the differences we get just by randomly shuffling the missing/non-missing labels, as they are mostly near 0. The red line is at about 69.01 calories, which is our observed difference, far out in the tail, meaning a difference this large is extremely unlikely under the null and gives strong evidence that missingness is associated with calories. In our permutation test, the observed difference in mean calories between recipes with missing and non-missing ratings was about 69.01 (missing - not missing), and the p-value was 0.0. This p-value is well below our significance level of 0.05, we **reject** the null hypothesis and conclude that our data provide strong evidence that rating missingness is associated with calories. In this sample, recipes with missing ratings tend to have higher average calories than those with non-missing ratings, suggesting that missingness is not completely random with respect to calories, and is consistent with MAR conditional on the column, **calories**.
 
 ---
 
